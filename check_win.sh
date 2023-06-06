@@ -15,7 +15,7 @@ diag1score=0 # 1row1col, 2row2col, 3row3col
 diag2score=0 # 1row3col, 2row2col, 3row1col
 row_score=0
 
-field="$field4"
+field="$field3"
 cell_i=1
 row_i=1
 col_i=1
@@ -37,25 +37,17 @@ for cell in $field; do
 		fi
 
 		# diagonal 1
-		if [[ "$row_i" -eq 1 ]] && [[ "$col_i" -eq 1 ]]; then
-			((diag1score++))
+		if [[ "$row_i $col_i" == "1 1" ]] ||
+			[[ "$row_i $col_i" == "2 2" ]] || 
+			[[ "$row_i $col_i" == "3 3" ]]; then
+					((diag1score++))
 		fi
-		if [[ "$row_i" -eq 2 ]] && [[ "$col_i" -eq 2 ]]; then
-			((diag1score++))
-		fi
-		if [[ "$row_i" -eq 3 ]] && [[ "$col_i" -eq 3 ]]; then
-			((diag1score++))
-		fi
-
+		
 		# diagonal 2
-		if [[ "$row_i" -eq 1 ]] && [[ "$col_i" -eq 3 ]]; then
-			((diag2score++))
-		fi
-		if [[ "$row_i" -eq 2 ]] && [[ "$col_i" -eq 2 ]]; then
-			((diag2score++))
-		fi
-		if [[ "$row_i" -eq 3 ]] && [[ "$col_i" -eq 1 ]]; then
-			((diag2score++))
+		if [[ "$row_i $col_i" == "1 3" ]] ||
+			[[ "$row_i $col_i" == "2 2" ]] || 
+			[[ "$row_i $col_i" == "3 1" ]]; then
+					((diag2score++))
 		fi
 
 	fi

@@ -1,0 +1,8 @@
+while game on
+  print field
+  while iterating through check if some player won
+
+  aks for player input
+  or
+  print that game over message
+
