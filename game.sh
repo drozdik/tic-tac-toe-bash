@@ -38,16 +38,16 @@ while [[ "$game" == "on" ]]; do
 			# row
 			((row_score++))
 			if [[ "$row_score" -eq 3 ]]; then
-				echo Player won with row
-				exit 0
+				game_over_reason="Player won with row"
+				game="over"
 			fi
 
 			# column
 			col_score="col${col_i}score"
 			((${col_score}++))
 			if [[ ${col_score} -eq 3 ]]; then
-				echo Player won with column "$col_i"
-				exit 0
+				game_over_reason="Player won with column "$col_i""
+				game="over"
 			fi
 
 			# diagonal 1
@@ -57,8 +57,8 @@ while [[ "$game" == "on" ]]; do
 						((diag1score++))
 			fi
 			if [[ ${diag1score} -eq 3 ]]; then
-				echo Player won with diagonal 1
-				exit 0
+				game_over_reason="Player won with diagonal 1"
+				game="over"
 			fi
 
 			# diagonal 2
@@ -68,8 +68,8 @@ while [[ "$game" == "on" ]]; do
 						((diag2score++))
 			fi
 			if [[ ${diag2score} -eq 3 ]]; then
-				echo Player won with diagonal 2
-				exit 0
+				game_over_reason="Player won with diagonal 2"
+				game="over"
 			fi
 		fi
 
@@ -103,6 +103,11 @@ while [[ "$game" == "on" ]]; do
 	new_field=""
 
 	# ask for a turn or print game over screen
+	if [[ "$game" == "over" ]]; then
+		echo GAME OVER
+		echo "$game_over_reason"
+		exit 0
+	fi
 
 	echo -e ""
 	echo "$active_player turn"
