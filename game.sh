@@ -13,9 +13,10 @@ do
 done
 
 player_pick=""
+round_i=1
 while [[ "$game" == "on" ]]; do
 
-	active_player="player 1"
+
 	col1score=0
 	col2score=0
 	col3score=0
@@ -30,10 +31,10 @@ while [[ "$game" == "on" ]]; do
 	for cell in $field; do
 		#echo "value $cell cell $cell_i row $row_i column $col_i"
 		if [[ "$cell_i" -eq "$player_pick" ]]; then
-			cell='x'
+			cell="$player_sign"
 		fi
 
-		if [[ "$cell" == 'x' ]]; then
+		if [[ "$cell" == "$player_sign" ]]; then
 
 			# row
 			((row_score++))
@@ -54,7 +55,7 @@ while [[ "$game" == "on" ]]; do
 			if [[ "$row_i $col_i" == "1 1" ]] ||
 				[[ "$row_i $col_i" == "2 2" ]] || 
 				[[ "$row_i $col_i" == "3 3" ]]; then
-						((diag1score++))
+							((diag1score++))
 			fi
 			if [[ ${diag1score} -eq 3 ]]; then
 				game_over_reason="Player won with diagonal 1"
@@ -65,7 +66,7 @@ while [[ "$game" == "on" ]]; do
 			if [[ "$row_i $col_i" == "1 3" ]] ||
 				[[ "$row_i $col_i" == "2 2" ]] || 
 				[[ "$row_i $col_i" == "3 1" ]]; then
-						((diag2score++))
+							((diag2score++))
 			fi
 			if [[ ${diag2score} -eq 3 ]]; then
 				game_over_reason="Player won with diagonal 2"
@@ -109,6 +110,14 @@ while [[ "$game" == "on" ]]; do
 		exit 0
 	fi
 
+	if [[ $((round_i%2)) -eq 1 ]]; then
+		active_player="player 1"
+		player_sign="x"
+	else
+		active_player="player 2"
+		player_sign="o"
+	fi
+
 	echo -e ""
 	echo "$active_player turn"
 	echo press cell number or 0 to quit
@@ -124,4 +133,5 @@ while [[ "$game" == "on" ]]; do
 	if [[ "$game" == "over" ]]; then
 		echo game over
 	fi
+	((round_i++))
 done
