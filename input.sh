@@ -1,11 +1,6 @@
-game="on"
-while [[ "$game" == "on" ]]; do
-	echo press cell number or 0 to quit
-	read input
-	read input
-	if [[ "$input" -eq 0 ]]; then
-		echo quitting
-		exit 0
-	fi
-	echo you chose "$input"
-done
+read input
+if [[ "$input" =~ [1-9] ]]; then
+	echo it is number 1-9
+else
+	echo it is not 
+fi

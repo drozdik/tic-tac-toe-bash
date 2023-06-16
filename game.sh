@@ -132,9 +132,15 @@ while [[ "$game" == "on" ]]; do
 	#echo options are "$options"
 	echo "$active_player ($player_sign)," press cell number or 0 to quit
 	read input
-	if [[ "$input" -eq 0 ]]; then
-		echo quitting
-		exit 0
+	if [[ "$input" =~ [0-9] ]]; then
+		if [[ "$input" -eq 0 ]]; then
+			echo quitting
+			exit 0
+		fi
+		player_pick="$input"
+	else
+		echo chose number from 0 to 9
+		continue
 	fi
 
 	# check if input corresponds to x or o, then go to next iteration without increasing round, means without changing player
@@ -151,7 +157,6 @@ while [[ "$game" == "on" ]]; do
 	fi
 
 	echo you chose "$input"
-	player_pick="$input"
 
 	if [[ "$game" == "over" ]]; then
 		echo game over
