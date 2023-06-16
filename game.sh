@@ -17,6 +17,7 @@ round_i=1
 while [[ "$game" == "on" ]]; do
 
 
+	options=""
 	col1score=0
 	col2score=0
 	col3score=0
@@ -29,6 +30,9 @@ while [[ "$game" == "on" ]]; do
 	col_i=1
 
 	for cell in $field; do
+		if [[ "$cell" != "x" ]] && [[ "$cell" != "o" ]]  && [[ "$cell_i" -ne "$player_pick" ]]; then
+			options="$options $cell_i"
+		fi
 		#echo "value $cell cell $cell_i row $row_i column $col_i"
 		if [[ "$cell_i" -eq "$player_pick" ]]; then
 			cell="$player_sign"
@@ -103,6 +107,12 @@ while [[ "$game" == "on" ]]; do
 	field="$new_field"
 	new_field=""
 
+	# finish game with draw if run out of options
+	if [[ -z "$options" ]]; then
+		game="over"
+		game_over_reason="DRAW"
+	fi
+
 	# ask for a turn or print game over screen
 	if [[ "$game" == "over" ]]; then
 		echo GAME OVER
@@ -119,12 +129,25 @@ while [[ "$game" == "on" ]]; do
 	fi
 
 	echo -e ""
-	echo "$active_player turn"
-	echo press cell number or 0 to quit
+	#echo options are "$options"
+	echo "$active_player ($player_sign)," press cell number or 0 to quit
 	read input
 	if [[ "$input" -eq 0 ]]; then
 		echo quitting
 		exit 0
+	fi
+
+	# check if input corresponds to x or o, then go to next iteration without increasing round, means without changing player
+	option="invalid"
+	for i in $options; do
+		if [[ "$i" -eq "$input" ]]; then
+			option="valid"
+		fi
+	done
+	if [[ "$option" == "invalid" ]]; then
+		echo "$input" is not a valid option
+		player_pick=""
+		continue
 	fi
 
 	echo you chose "$input"
