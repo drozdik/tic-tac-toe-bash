@@ -1,3 +1,6 @@
+#
+# game
+#
 game="on"
 
 # prepare field 'array'
@@ -14,9 +17,15 @@ done
 
 player_pick=""
 round_i=1
+#
+# round
+#
 while [[ "$game" == "on" ]]; do
 
 
+	#
+	# diaplay and evaluate
+	#
 	options=""
 	col1score=0
 	col2score=0
@@ -120,12 +129,26 @@ while [[ "$game" == "on" ]]; do
 		exit 0
 	fi
 
+	#
+	# player action
+	#
 	if [[ $((round_i%2)) -eq 1 ]]; then
 		active_player="player 1"
 		player_sign="x"
 	else
 		active_player="player 2"
 		player_sign="o"
+	fi
+
+	if [[ "$active_player" == "player 2" ]]; then
+		echo bot playing
+		for i in $options; do
+			echo bot chose "$i"
+			player_pick="$i"
+			break
+		done
+		((round_i++))
+		continue
 	fi
 
 	echo -e ""
@@ -158,8 +181,5 @@ while [[ "$game" == "on" ]]; do
 
 	echo you chose "$input"
 
-	if [[ "$game" == "over" ]]; then
-		echo game over
-	fi
 	((round_i++))
 done
