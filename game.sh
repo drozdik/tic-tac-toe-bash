@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # game
 #
@@ -142,11 +143,37 @@ while [[ "$game" == "on" ]]; do
 
 	if [[ "$active_player" == "player 2" ]]; then
 		echo bot playing
-		for i in $options; do
-			echo bot chose "$i"
-			player_pick="$i"
-			break
-		done
+		# need smth more intelligent
+		# check if any scores has two in it, then put there maybe?
+		# let's start with columns
+		if [[ "$col1score" -eq 2 ]]; then
+			echo 000 bot sees 2 socre in first columnt
+			# find available option in col1
+			# all col1 numbers are 1, 4, 5
+			echo 000 options are "$options"
+			for i in $options; do
+				echo 000 compare "$i" to 147
+				if [[ "$i" =~ [147] ]]; then
+					echo 000 bot chooses "$i"
+					player_pick="$i"
+					break
+				fi
+			done
+			echo 000 fallback to random
+			echo 000 bot chooses random
+			for i in $options; do
+				player_pick="$i"
+				break
+			done
+		else
+			echo 000 bot chooses random
+			for i in $options; do
+				player_pick="$i"
+				break
+			done
+		fi
+
+		echo bot chose "$i"
 		((round_i++))
 		continue
 	fi
