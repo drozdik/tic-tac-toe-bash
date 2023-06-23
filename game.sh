@@ -142,37 +142,50 @@ while [[ "$game" == "on" ]]; do
 	fi
 
 	if [[ "$active_player" == "player 2" ]]; then
+		echo
 		echo bot playing
-		# need smth more intelligent
-		# check if any scores has two in it, then put there maybe?
-		# let's start with columns
+		echo
+
+		bot_pick=""
+		prefered=""
+
 		if [[ "$col1score" -eq 2 ]]; then
-			echo 000 bot sees 2 socre in first columnt
-			# find available option in col1
-			# all col1 numbers are 1, 4, 5
-			echo 000 options are "$options"
-			for i in $options; do
-				echo 000 compare "$i" to 147
-				if [[ "$i" =~ [147] ]]; then
-					echo 000 bot chooses "$i"
-					player_pick="$i"
-					break
-				fi
-			done
-			echo 000 fallback to random
-			echo 000 bot chooses random
-			for i in $options; do
-				player_pick="$i"
+			prefered="${prefered}147"
+		fi
+
+		if [[ "$col2score" -eq 2 ]]; then 
+			prefered="${prefered}258"
+		fi
+
+		if [[ "$col3score" -eq 2 ]]; then 
+			prefered="${prefered}369"
+		fi
+		prefered="[$prefered]"
+
+		echo prefered are "$prefered"
+		echo options "$options"
+		echo col1score "$col1score"
+		echo col2score "$col2score"
+		echo col3score "$col3score"
+		echo diag1score "$diag1score"
+		echo diag2score "$diag2score"
+		echo row_score "$row_score"
+		echo
+		for i in $options; do
+			if [[ "$i" =~ ${prefered} ]]; then
+				bot_pick="$i"
 				break
-			done
-		else
+			fi
+		done
+		if [[ "$bot_pick" == "" ]]; then
 			echo 000 bot chooses random
 			for i in $options; do
-				player_pick="$i"
+				bot_pick="$i"
 				break
 			done
 		fi
 
+		player_pick="$bot_pick"
 		echo bot chose "$i"
 		((round_i++))
 		continue
