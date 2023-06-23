@@ -160,6 +160,15 @@ while [[ "$game" == "on" ]]; do
 		if [[ "$col3score" -eq 2 ]]; then 
 			prefered="${prefered}369"
 		fi
+
+		if [[ "$diag1score" -eq 2 ]]; then 
+			prefered="${prefered}159"
+		fi
+
+		if [[ "$diag2score" -eq 2 ]]; then 
+			prefered="${prefered}357"
+		fi
+
 		prefered="[$prefered]"
 
 		echo prefered are "$prefered"
