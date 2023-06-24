@@ -28,6 +28,9 @@ while [[ "$game" == "on" ]]; do
 	# diaplay and evaluate
 	#
 	options=""
+	row1score=0
+	row2score=0
+	row3score=0
 	col1score=0
 	col2score=0
 	col3score=0
@@ -51,9 +54,10 @@ while [[ "$game" == "on" ]]; do
 		if [[ "$cell" == "$player_sign" ]]; then
 
 			# row
-			((row_score++))
-			if [[ "$row_score" -eq 3 ]]; then
-				game_over_reason="Player won with row"
+			row_score="row${row_i}score"
+			((${row_score}++))
+			if [[ ${row_score} -eq 3 ]]; then
+				game_over_reason="Player won with rowumn "$row_i""
 				game="over"
 			fi
 
@@ -149,6 +153,18 @@ while [[ "$game" == "on" ]]; do
 		bot_pick=""
 		prefered=""
 
+		if [[ "$row1score" -eq 2 ]]; then
+			prefered="${prefered}123"
+		fi
+
+		if [[ "$row2score" -eq 2 ]]; then 
+			prefered="${prefered}456"
+		fi
+
+		if [[ "$row3score" -eq 2 ]]; then 
+			prefered="${prefered}789"
+		fi
+
 		if [[ "$col1score" -eq 2 ]]; then
 			prefered="${prefered}147"
 		fi
@@ -171,15 +187,19 @@ while [[ "$game" == "on" ]]; do
 
 		prefered="[$prefered]"
 
-		echo prefered are "$prefered"
-		echo options "$options"
-		echo col1score "$col1score"
-		echo col2score "$col2score"
-		echo col3score "$col3score"
-		echo diag1score "$diag1score"
-		echo diag2score "$diag2score"
-		echo row_score "$row_score"
-		echo
+		#echo
+		#echo prefered are "$prefered"
+		#echo options "$options"
+		#echo row1score "$row1score"
+		#echo row2score "$row2score"
+		#echo row3score "$row3score"
+		#echo col1score "$col1score"
+		#echo col2score "$col2score"
+		#echo col3score "$col3score"
+		#echo diag1score "$diag1score"
+		#echo diag2score "$diag2score"
+		#echo row_score "$row_score"
+		#echo
 		for i in $options; do
 			if [[ "$i" =~ ${prefered} ]]; then
 				bot_pick="$i"
@@ -187,7 +207,6 @@ while [[ "$game" == "on" ]]; do
 			fi
 		done
 		if [[ "$bot_pick" == "" ]]; then
-			echo 000 bot chooses random
 			for i in $options; do
 				bot_pick="$i"
 				break
@@ -195,7 +214,6 @@ while [[ "$game" == "on" ]]; do
 		fi
 
 		player_pick="$bot_pick"
-		echo bot chose "$i"
 		((round_i++))
 		continue
 	fi
