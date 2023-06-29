@@ -1,4 +1,16 @@
 #!/bin/bash
+while :
+do
+	echo how many players? '(1 or 2)':
+	read playersnumber
+	if [[ $playersnumber == 1 || $playersnumber == 2 ]]; then
+		break
+	else
+		echo type 1 or 2:
+		continue
+	fi
+done
+		
 #
 # game
 #
@@ -145,7 +157,7 @@ while [[ "$game" == "on" ]]; do
 		player_sign="o"
 	fi
 
-	if [[ "$active_player" == "player 2" ]]; then
+	if [[ "$active_player" == "player 2" && $playersnumber == 1 ]]; then
 		echo
 		echo bot playing
 		echo
