@@ -69,7 +69,7 @@ while [[ "$game" == "on" ]]; do
 			row_score="row${row_i}score"
 			((${row_score}++))
 			if [[ ${row_score} -eq 3 ]]; then
-				game_over_reason="Player won with rowumn "$row_i""
+				game_over_reason="$active_player won with rowumn "$row_i""
 				game="over"
 			fi
 
@@ -77,7 +77,7 @@ while [[ "$game" == "on" ]]; do
 			col_score="col${col_i}score"
 			((${col_score}++))
 			if [[ ${col_score} -eq 3 ]]; then
-				game_over_reason="Player won with column "$col_i""
+				game_over_reason="$active_player won with column "$col_i""
 				game="over"
 			fi
 
@@ -88,7 +88,7 @@ while [[ "$game" == "on" ]]; do
 							((diag1score++))
 			fi
 			if [[ ${diag1score} -eq 3 ]]; then
-				game_over_reason="Player won with diagonal 1"
+				game_over_reason="$active_player won with diagonal 1"
 				game="over"
 			fi
 
@@ -99,7 +99,7 @@ while [[ "$game" == "on" ]]; do
 							((diag2score++))
 			fi
 			if [[ ${diag2score} -eq 3 ]]; then
-				game_over_reason="Player won with diagonal 2"
+				game_over_reason="$active_player won with diagonal 2"
 				game="over"
 			fi
 		fi
@@ -258,7 +258,7 @@ while [[ "$game" == "on" ]]; do
 		continue
 	fi
 
-	echo you chose "$input"
+	# echo you chose "$input"
 
 	((round_i++))
 done
